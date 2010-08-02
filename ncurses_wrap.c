@@ -2460,7 +2460,7 @@ static VALUE rbncurs_assume_default_colors(VALUE dummy, VALUE fg, VALUE bg)
 
 static void init_functions_3(void)
 {
-#if defined (HAVE_UNGETMOUSE) && !defined (_WIN32)
+#if defined (HAVE_UNGETMOUSE) && !defined (_WIN32) 
     NCFUNC(getmouse, 1);
     NCFUNC(ungetmouse, 1);
 #endif
