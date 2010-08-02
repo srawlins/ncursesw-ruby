@@ -129,7 +129,11 @@ init_constants_1(void)
     rb_define_const(mNcurses, "LC_ALL",        INT2NUM(LC_ALL));
     rb_define_const(mNcurses, "LC_COLLATE",    INT2NUM(LC_COLLATE));
     rb_define_const(mNcurses, "LC_CTYPE",      INT2NUM(LC_CTYPE));
+#ifdef _WIN32
+    rb_define_const(mNcurses, "LC_MESSAGES",   INT2NUM(__MINGW_LC_MESSAGES__));
+#else
     rb_define_const(mNcurses, "LC_MESSAGES",   INT2NUM(LC_MESSAGES));
+#endif
     rb_define_const(mNcurses, "LC_MONETARY",   INT2NUM(LC_MONETARY));
     rb_define_const(mNcurses, "LC_NUMERIC",    INT2NUM(LC_NUMERIC));
     rb_define_const(mNcurses, "LC_TIME",       INT2NUM(LC_TIME));
@@ -2201,7 +2205,7 @@ static void init_constants_3(void) {
 /*     mmask_t bstate; *//* button state bits */
 /* } */
 /* MEVENT; */
-#ifdef HAVE_UNGETMOUSE
+#if defined (HAVE_UNGETMOUSE) && !defined (_WIN32)
 static VALUE rbncurs_getmouse(VALUE dummy, VALUE rb_m)
 {
     MEVENT m;
@@ -2456,7 +2460,7 @@ static VALUE rbncurs_assume_default_colors(VALUE dummy, VALUE fg, VALUE bg)
 
 static void init_functions_3(void)
 {
-#ifdef HAVE_UNGETMOUSE
+#if defined (HAVE_UNGETMOUSE) && !defined (_WIN32)
     NCFUNC(getmouse, 1);
     NCFUNC(ungetmouse, 1);
 #endif
